@@ -4,82 +4,103 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Meta Ads Manager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <style>
 :root{
-  --bg:#05070d;--surface:#0a0e16;--card:#0e1420;--card2:#131b2a;
-  --border:#1c2536;--text:#eef2f7;--muted:#8b95a8;--dim:#5c6b82;
-  --blue:#1877f2;--blue2:#4da3ff;--cyan:#22d3ee;--green:#22c55e;
-  --amber:#f59e0b;--purple:#a78bfa;--pink:#ec4899;--red:#ef4444;
-  --grad:linear-gradient(135deg,#1877f2 0%,#8b5cf6 50%,#ec4899 100%);
-  --radius:16px;--shadow:0 12px 40px rgba(0,0,0,.42);
+  --bg:#07090f;
+  --surface:#0c1018;
+  --card:#111827;
+  --card2:#161f2e;
+  --border:#1e2a3a;
+  --border2:#283548;
+  --text:#f1f5f9;
+  --muted:#94a3b8;
+  --dim:#64748b;
+  --meta:#0668E1;
+  --meta2:#4B9BFF;
+  --cyan:#22d3ee;
+  --green:#22c55e;
+  --amber:#f59e0b;
+  --purple:#a78bfa;
+  --pink:#ec4899;
+  --red:#ef4444;
+  --grad:linear-gradient(135deg,#0668E1 0%,#4B9BFF 45%,#8b5cf6 100%);
+  --radius:14px;
+  --shadow:0 8px 32px rgba(0,0,0,.45);
+  --glow:0 0 24px rgba(6,104,225,.18);
 }
 [data-theme="light"]{
-  --bg:#eef1f6;--surface:#ffffff;--card:#ffffff;--card2:#f4f6fb;
-  --border:#d7dee9;--text:#0f172a;--muted:#64748b;--dim:#94a3b8;
-  --shadow:0 8px 28px rgba(15,23,42,.08);
+  --bg:#f0f4f8;--surface:#ffffff;--card:#ffffff;--card2:#f8fafc;
+  --border:#e2e8f0;--border2:#cbd5e1;--text:#0f172a;--muted:#475569;--dim:#94a3b8;
+  --shadow:0 8px 28px rgba(15,23,42,.08);--glow:0 0 20px rgba(6,104,225,.1);
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
-.nav{height:62px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 20px;gap:12px;position:sticky;top:0;z-index:50}
-.ib{width:40px;height:40px;border-radius:11px;border:1px solid var(--border);background:var(--card2);color:var(--muted);cursor:pointer;display:grid;place-items:center;transition:.15s}
-.ib:hover{color:var(--text);border-color:var(--blue)}
-.brand{display:flex;align-items:center;gap:11px;flex:1}
-.logo{width:36px;height:36px;border-radius:11px;background:var(--grad);display:grid;place-items:center;color:#fff;font-weight:800;font-size:18px}
-.brand h1{font-size:15px;font-weight:700;letter-spacing:-.2px}
-.brand p{font-size:11px;color:var(--dim)}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased}
+.nav{height:64px;background:rgba(12,16,24,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 22px;gap:14px;position:sticky;top:0;z-index:50}
+.ib{width:38px;height:38px;border-radius:10px;border:1px solid var(--border);background:var(--card2);color:var(--muted);cursor:pointer;display:grid;place-items:center;transition:.18s}
+.ib:hover{color:var(--text);border-color:var(--meta);box-shadow:var(--glow)}
+.brand{display:flex;align-items:center;gap:12px;flex:1}
+.logo-wrap{width:38px;height:38px;border-radius:10px;background:linear-gradient(145deg,#0668E1,#0a4db3);display:grid;place-items:center;box-shadow:0 4px 16px rgba(6,104,225,.35)}
+.logo-wrap svg{width:22px;height:22px}
+.brand h1{font-size:16px;font-weight:700;letter-spacing:-.3px;color:var(--text)}
+.brand p{font-size:11px;color:var(--muted);font-weight:500;margin-top:1px}
 .nav-r{display:flex;align-items:center;gap:8px}
-.live{display:flex;align-items:center;gap:6px;padding:6px 11px;border-radius:999px;background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.3);color:var(--green);font-size:11px;font-weight:700}
-.dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 1.5s infinite}
-@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(34,197,94,.5)}70%{box-shadow:0 0 0 8px transparent}}
-.bd{position:fixed;inset:0;background:rgba(0,0,0,.55);opacity:0;pointer-events:none;transition:.22s;z-index:80}
+.live{display:flex;align-items:center;gap:7px;padding:6px 12px;border-radius:999px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.28);color:#4ade80;font-size:11px;font-weight:700;letter-spacing:.3px}
+.dot{width:7px;height:7px;border-radius:50%;background:#22c55e;box-shadow:0 0 8px #22c55e;animation:pulse 1.6s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
+.bd{position:fixed;inset:0;background:rgba(0,0,0,.6);opacity:0;pointer-events:none;transition:.22s;z-index:80}
 .bd.show{opacity:1;pointer-events:auto}
-.dr{position:fixed;top:0;left:0;bottom:0;width:300px;background:var(--surface);border-right:1px solid var(--border);transform:translateX(-105%);transition:.26s cubic-bezier(.4,0,.2,1);z-index:90;padding:16px 12px;overflow:auto}
+.dr{position:fixed;top:0;left:0;bottom:0;width:290px;background:var(--surface);border-right:1px solid var(--border);transform:translateX(-105%);transition:.28s cubic-bezier(.4,0,.2,1);z-index:90;padding:18px 14px;overflow:auto}
 .dr.show{transform:translateX(0)}
-.dr-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding:4px 6px 12px;border-bottom:1px solid var(--border)}
-.dr-h h3{font-size:12px;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:.55px}
-.bb{width:100%;text-align:left;border:1px solid transparent;background:transparent;color:var(--muted);padding:12px 13px;border-radius:11px;cursor:pointer;font-size:13.5px;font-weight:500;margin-bottom:3px;transition:.15s}
+.dr-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;padding:4px 6px 14px;border-bottom:1px solid var(--border)}
+.dr-h h3{font-size:11px;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:.8px}
+.bb{width:100%;text-align:left;border:1px solid transparent;background:transparent;color:var(--muted);padding:11px 13px;border-radius:10px;cursor:pointer;font-size:13.5px;font-weight:500;margin-bottom:2px;transition:.15s;font-family:inherit}
 .bb:hover{background:var(--card2);color:var(--text)}
-.bb.on{background:rgba(24,119,242,.12);border-color:rgba(24,119,242,.35);color:var(--blue2)}
-.wrap{max-width:1400px;margin:0 auto;padding:22px 24px 48px}
-.head{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap;margin-bottom:18px}
-.head h2{font-size:24px;font-weight:750;letter-spacing:-.4px}
-.head .sub{font-size:12.5px;color:var(--dim);margin-top:4px}
-.filters{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:8px 10px}
-.filters label{font-size:11px;color:var(--dim);font-weight:600}
-.filters input{background:var(--card2);border:1px solid var(--border);color:var(--text);border-radius:9px;padding:7px 9px;font-size:12.5px;outline:0}
-.filters input:focus{border-color:var(--blue)}
-.btn{border:0;background:var(--grad);color:#fff;font-weight:700;font-size:12.5px;padding:8px 14px;border-radius:9px;cursor:pointer}
-.btn:hover{filter:brightness(1.07)}
+.bb.on{background:rgba(6,104,225,.14);border-color:rgba(6,104,225,.4);color:var(--meta2)}
+.wrap{max-width:1420px;margin:0 auto;padding:24px 26px 56px}
+.head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;margin-bottom:20px}
+.head h2{font-size:26px;font-weight:800;letter-spacing:-.5px;color:var(--text)}
+.head .sub{font-size:12.5px;color:var(--muted);margin-top:5px;font-weight:500}
+.filters{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:9px 12px;box-shadow:var(--shadow)}
+.filters label{font-size:11px;color:var(--dim);font-weight:600;text-transform:uppercase;letter-spacing:.4px}
+.filters input{background:var(--card2);border:1px solid var(--border2);color:var(--text);border-radius:8px;padding:7px 10px;font-size:12.5px;outline:0;font-family:inherit;font-weight:500}
+.filters input:focus{border-color:var(--meta);box-shadow:0 0 0 3px rgba(6,104,225,.15)}
+.btn{border:0;background:var(--grad);color:#fff;font-weight:700;font-size:12.5px;padding:8px 16px;border-radius:8px;cursor:pointer;font-family:inherit;letter-spacing:.2px;box-shadow:0 4px 14px rgba(6,104,225,.3)}
+.btn:hover{filter:brightness(1.1);transform:translateY(-1px)}
 .kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:12px}
-.kpi{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 14px;position:relative;overflow:hidden;box-shadow:var(--shadow)}
-.kpi:before{content:"";position:absolute;left:0;top:0;right:0;height:3px;background:var(--grad)}
-.kpi .l{font-size:10.5px;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
-.kpi .v{font-size:22px;font-weight:800;letter-spacing:-.5px;line-height:1.15}
-.kpi .s{font-size:11px;color:var(--dim);margin-top:5px}
-.grid2{display:grid;grid-template-columns:1.3fr 1fr;gap:14px;margin:16px 0 18px}
-.panel{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
-.panel h3{font-size:12.5px;font-weight:700;color:var(--muted);margin-bottom:12px}
-.ch{height:280px;position:relative}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px 16px;position:relative;overflow:hidden;box-shadow:var(--shadow);transition:.2s}
+.kpi:hover{border-color:var(--border2);box-shadow:var(--glow)}
+.kpi:before{content:"";position:absolute;left:0;top:0;right:0;height:2.5px;background:var(--grad)}
+.kpi .l{font-size:10.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px}
+.kpi .v{font-size:23px;font-weight:800;letter-spacing:-.6px;line-height:1.1;color:var(--text)}
+.kpi .s{font-size:11.5px;color:var(--dim);margin-top:6px;font-weight:500}
+.grid2{display:grid;grid-template-columns:1.35fr 1fr;gap:14px;margin:16px 0 20px}
+.panel{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
+.panel h3{font-size:12px;font-weight:700;color:var(--muted);margin-bottom:14px;text-transform:uppercase;letter-spacing:.5px}
+.ch{height:290px;position:relative}
 .tc{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
-.th{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:1px solid var(--border);gap:10px;flex-wrap:wrap}
-.th h3{font-size:13.5px;font-weight:700}
-.search{width:240px;background:var(--card2);border:1px solid var(--border);color:var(--text);border-radius:9px;padding:8px 11px;font-size:12.5px;outline:0}
-.search:focus{border-color:var(--blue)}
-.scroll{max-height:560px;overflow:auto}
-table{width:100%;border-collapse:collapse;font-size:12px}
-th{position:sticky;top:0;z-index:1;background:var(--card2);color:var(--dim);text-align:left;font-size:10px;letter-spacing:.35px;text-transform:uppercase;padding:10px 11px;border-bottom:1px solid var(--border);white-space:nowrap}
-td{padding:10px 11px;border-bottom:1px solid var(--border);color:var(--muted);white-space:nowrap}
-tr:hover td{background:rgba(24,119,242,.04)}
-.hi{color:var(--green);font-weight:800}.mid{color:var(--amber);font-weight:800}.lo{color:var(--red);font-weight:800}
-.pill{display:inline-block;padding:2px 8px;border-radius:999px;font-size:10px;font-weight:700}
-.on{background:rgba(34,197,94,.14);color:var(--green)}.off{background:rgba(239,68,68,.12);color:var(--red)}
+.th{display:flex;justify-content:space-between;align-items:center;padding:16px 18px;border-bottom:1px solid var(--border);gap:12px;flex-wrap:wrap;background:rgba(22,31,46,.5)}
+.th h3{font-size:14px;font-weight:700;color:var(--text)}
+.search{width:260px;background:var(--card2);border:1px solid var(--border2);color:var(--text);border-radius:9px;padding:9px 12px;font-size:13px;outline:0;font-family:inherit;font-weight:500}
+.search:focus{border-color:var(--meta);box-shadow:0 0 0 3px rgba(6,104,225,.15)}
+.search::placeholder{color:var(--dim)}
+.scroll{max-height:580px;overflow:auto}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{position:sticky;top:0;z-index:1;background:#0e1624;color:var(--muted);text-align:left;font-size:10.5px;letter-spacing:.5px;text-transform:uppercase;padding:12px 13px;border-bottom:2px solid var(--border2);white-space:nowrap;font-weight:700}
+td{padding:12px 13px;border-bottom:1px solid #152033;color:var(--muted);white-space:nowrap;font-weight:500}
+tr:hover td{background:rgba(6,104,225,.06);color:var(--text)}
+.hi{color:#4ade80;font-weight:800}.mid{color:#fbbf24;font-weight:800}.lo{color:#f87171;font-weight:800}
+.pill{display:inline-block;padding:3px 9px;border-radius:999px;font-size:10px;font-weight:700;letter-spacing:.3px}
+.on{background:rgba(34,197,94,.15);color:#4ade80;border:1px solid rgba(34,197,94,.25)}
+.off{background:rgba(239,68,68,.12);color:#f87171;border:1px solid rgba(239,68,68,.2)}
 .center{min-height:70vh;display:grid;place-items:center;color:var(--muted);text-align:center;padding:24px}
-.sp{width:40px;height:40px;border:3px solid var(--border);border-top-color:var(--blue);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 12px}
+.sp{width:42px;height:42px;border:3px solid var(--border);border-top-color:var(--meta);border-radius:50%;animation:spin .75s linear infinite;margin:0 auto 14px}
 @keyframes spin{to{transform:rotate(360deg)}}
-.err{max-width:520px;margin:40px auto;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.28);color:#ff9b9b;border-radius:14px;padding:22px;line-height:1.55}
+.err{max-width:520px;margin:40px auto;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.3);color:#fca5a5;border-radius:14px;padding:24px;line-height:1.6;font-weight:500}
 @media(max-width:1100px){.kpis{grid-template-columns:repeat(3,1fr)}.grid2{grid-template-columns:1fr}}
-@media(max-width:700px){.kpis{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:700px){.kpis{grid-template-columns:repeat(2,1fr)}.search{width:100%}}
 </style>
 </head>
 <body>
@@ -91,11 +112,19 @@ tr:hover td{background:rgba(24,119,242,.04)}
 
 <header class="nav">
   <button class="ib" onclick="openMenu()" title="Brands">
-    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
   </button>
   <div class="brand">
-    <div class="logo">∞</div>
-    <div><h1>Meta Ads Manager</h1><p>Performance Dashboard</p></div>
+    <div class="logo-wrap">
+      <svg viewBox="0 0 36 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8.5 4.5C4.5 4.5 1.5 8.2 1.5 12s3 7.5 7 7.5c2.2 0 4.1-1.1 5.8-3.2L18 12l3.7 4.3c1.7 2.1 3.6 3.2 5.8 3.2 4 0 7-3.5 7-7.5s-3-7.5-7-7.5c-2.2 0-4.1 1.1-5.8 3.2L18 12l-3.7-4.3C12.6 5.6 10.7 4.5 8.5 4.5z" fill="white" fill-opacity=".95"/>
+        <path d="M8.5 6.2c-2.9 0-5.2 2.7-5.2 5.8s2.3 5.8 5.2 5.8c1.5 0 2.9-.8 4.3-2.5L18 12l5.2 3.3c1.4 1.7 2.8 2.5 4.3 2.5 2.9 0 5.2-2.7 5.2-5.8s-2.3-5.8-5.2-5.8c-1.5 0-2.9.8-4.3 2.5L18 12l-5.2-3.3C11.4 7 10 6.2 8.5 6.2z" fill="white"/>
+      </svg>
+    </div>
+    <div>
+      <h1>Meta Ads Manager</h1>
+      <p>Performance Dashboard</p>
+    </div>
   </div>
   <div class="nav-r">
     <div class="live"><span class="dot"></span>LIVE</div>
@@ -144,7 +173,6 @@ async function boot(){
     if(!rows.length) throw new Error("No data rows found");
     const starts=[...new Set(rows.map(r=>r["Reporting starts"]).filter(Boolean))].sort();
     const ends=[...new Set(rows.map(r=>r["Reporting ends"]).filter(Boolean))].sort();
-    const dates=starts;
     from=starts[0]; to=ends[ends.length-1] || starts[starts.length-1];
     build(starts, ends); setBrand("ALL");
   }catch(e){
@@ -153,7 +181,6 @@ async function boot(){
 }
 
 function build(starts, ends){
-  const dates=starts;
   const brands=[...new Set(rows.map(r=>r.Brand).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
   document.getElementById("brands").innerHTML=
     `<button class="bb on" data-b="ALL" onclick="setBrand('ALL')">All Brands</button>`+
@@ -244,15 +271,15 @@ function agg(list){
 function render(){
   const list=filtered(); const {a,camps,brands}=agg(list);
   document.getElementById("kpi1").innerHTML=`
-    <div class="kpi"><div class="l">Total Spend</div><div class="v" style="color:var(--blue2)">${hkd(a.spend)}</div><div class="s">HKD</div></div>
-    <div class="kpi"><div class="l">Revenue</div><div class="v" style="color:var(--green)">${hkd(a.rev)}</div><div class="s">Purchase value</div></div>
+    <div class="kpi"><div class="l">Total Spend</div><div class="v" style="color:var(--meta2)">${hkd(a.spend)}</div><div class="s">HKD</div></div>
+    <div class="kpi"><div class="l">Revenue</div><div class="v" style="color:#4ade80">${hkd(a.rev)}</div><div class="s">Purchase value</div></div>
     <div class="kpi"><div class="l">ROAS</div><div class="v" style="color:var(--cyan)">${a.roas.toFixed(2)}x</div><div class="s">Return on ad spend</div></div>
     <div class="kpi"><div class="l">Purchases</div><div class="v" style="color:var(--amber)">${fmt(a.purch)}</div><div class="s">Conversions</div></div>
     <div class="kpi"><div class="l">CPA</div><div class="v" style="color:var(--purple)">HK$ ${a.cpa.toFixed(0)}</div><div class="s">Cost per purchase</div></div>`;
   document.getElementById("kpi2").innerHTML=`
-    <div class="kpi"><div class="l">Impressions</div><div class="v" style="color:var(--blue2)">${fmt(a.imps)}</div><div class="s">Total views</div></div>
+    <div class="kpi"><div class="l">Impressions</div><div class="v" style="color:var(--meta2)">${fmt(a.imps)}</div><div class="s">Total views</div></div>
     <div class="kpi"><div class="l">Reach</div><div class="v" style="color:var(--cyan)">${fmt(a.reach)}</div><div class="s">Unique users</div></div>
-    <div class="kpi"><div class="l">Link Clicks</div><div class="v" style="color:var(--green)">${fmt(a.clicks)}</div><div class="s">CTR ${a.ctr.toFixed(2)}%</div></div>
+    <div class="kpi"><div class="l">Link Clicks</div><div class="v" style="color:#4ade80">${fmt(a.clicks)}</div><div class="s">CTR ${a.ctr.toFixed(2)}%</div></div>
     <div class="kpi"><div class="l">Hook Rate</div><div class="v" style="color:var(--amber)">${a.hookAvg.toFixed(1)}%</div><div class="s">Avg hook</div></div>
     <div class="kpi"><div class="l">Active Ads</div><div class="v" style="color:var(--pink)">${a.active}</div><div class="s">of ${a.ads} total</div></div>`;
   window.__camps=Object.entries(camps).map(([name,c])=>({
@@ -264,40 +291,46 @@ function render(){
 }
 function renderCharts(){
   const dark=document.documentElement.getAttribute("data-theme")==="dark";
-  const tick=dark?"#8b95a8":"#64748b", grid=dark?"rgba(139,149,168,.08)":"rgba(100,116,139,.12)";
+  const tick=dark?"#94a3b8":"#64748b", grid=dark?"rgba(148,163,184,.07)":"rgba(100,116,139,.12)";
   const b=window.__brands||{};
   const names=Object.keys(b).sort((a,c)=>b[c].spend-b[a].spend);
   const labels=names.map(dn), spends=names.map(x=>b[x].spend), roas=names.map(x=>b[x].spend?b[x].rev/b[x].spend:0);
   if(spendChart) spendChart.destroy(); if(roasChart) roasChart.destroy();
   const cs=document.getElementById("cSpend"), cr=document.getElementById("cRoas"); if(!cs||!cr) return;
-  spendChart=new Chart(cs,{type:"bar",data:{labels,datasets:[{data:spends,backgroundColor:"rgba(24,119,242,.8)",borderColor:"#1877f2",borderWidth:1,borderRadius:6}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
-      scales:{x:{ticks:{color:tick,font:{size:11}},grid:{display:false}},y:{ticks:{color:tick,font:{size:11},callback:v=>fmt(v)},grid:{color:grid}}}}});
-  roasChart=new Chart(cr,{type:"bar",data:{labels,datasets:[{data:roas,backgroundColor:roas.map(v=>v>=2.5?"rgba(34,197,94,.8)":v>=2?"rgba(245,158,11,.8)":"rgba(239,68,68,.72)"),borderRadius:6}]},
-    options:{indexAxis:"y",responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
-      scales:{x:{ticks:{color:tick,font:{size:11}},grid:{color:grid}},y:{ticks:{color:tick,font:{size:11}},grid:{display:false}}}}});
+
+  const spendGrad=cs.getContext("2d").createLinearGradient(0,0,0,280);
+  spendGrad.addColorStop(0,"rgba(75,155,255,.95)");
+  spendGrad.addColorStop(1,"rgba(6,104,225,.55)");
+
+  spendChart=new Chart(cs,{type:"bar",data:{labels,datasets:[{data:spends,backgroundColor:spendGrad,borderColor:"#4B9BFF",borderWidth:0,borderRadius:8,borderSkipped:false}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{backgroundColor:"#0c1018",titleColor:"#f1f5f9",bodyColor:"#94a3b8",borderColor:"#1e2a3a",borderWidth:1,padding:12,cornerRadius:10}},
+      scales:{x:{ticks:{color:tick,font:{size:11,weight:600,family:"Inter"}},grid:{display:false},border:{display:false}},y:{ticks:{color:tick,font:{size:11,family:"Inter"},callback:v=>fmt(v)},grid:{color:grid},border:{display:false}}}}});
+
+  roasChart=new Chart(cr,{type:"bar",data:{labels,datasets:[{data:roas,backgroundColor:roas.map(v=>v>=2.5?"rgba(34,197,94,.85)":v>=2?"rgba(245,158,11,.85)":"rgba(239,68,68,.75)"),borderRadius:7,borderSkipped:false}]},
+    options:{indexAxis:"y",responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{backgroundColor:"#0c1018",titleColor:"#f1f5f9",bodyColor:"#94a3b8",borderColor:"#1e2a3a",borderWidth:1,padding:12,cornerRadius:10}},
+      scales:{x:{ticks:{color:tick,font:{size:11,family:"Inter"}},grid:{color:grid},border:{display:false}},y:{ticks:{color:tick,font:{size:11,weight:600,family:"Inter"}},grid:{display:false},border:{display:false}}}}});
 }
 function drawTable(){
   const q=(document.getElementById("q")?.value||"").toLowerCase();
   let list=window.__camps||[];
   if(q) list=list.filter(c=>c.name.toLowerCase().includes(q)||dn(c.brand).toLowerCase().includes(q));
   const tb=document.getElementById("tbody"); if(!tb) return;
-  if(!list.length){tb.innerHTML=`<tr><td colspan="16" style="text-align:center;padding:40px;color:var(--dim)">No campaigns</td></tr>`;return}
+  if(!list.length){tb.innerHTML=`<tr><td colspan="16" style="text-align:center;padding:48px;color:var(--dim)">No campaigns</td></tr>`;return}
   tb.innerHTML=list.slice(0,150).map(c=>{
     const cls=c.roas>=2.5?"hi":c.roas>=2?"mid":"lo";
     const active=(c.status||[]).includes("ACTIVE");
     return `<tr>
-      <td style="color:var(--text);font-weight:600;max-width:240px;overflow:hidden;text-overflow:ellipsis" title="${c.name}">${c.name}</td>
-      <td>${dn(c.brand)}</td>
-      <td>${hkd(c.spend)}</td>
+      <td style="color:var(--text);font-weight:600;max-width:250px;overflow:hidden;text-overflow:ellipsis" title="${c.name}">${c.name}</td>
+      <td style="color:var(--text);font-weight:500">${dn(c.brand)}</td>
+      <td style="color:var(--text)">${hkd(c.spend)}</td>
       <td>${fmt(c.imps)}</td>
       <td>${fmt(c.clicks)}</td>
       <td>${c.ctr.toFixed(2)}%</td>
       <td>HK$ ${c.cpc.toFixed(2)}</td>
       <td>${fmt(c.lpv)}</td>
       <td>${fmt(c.atc)}</td>
-      <td>${c.purch}</td>
-      <td>${hkd(c.rev)}</td>
+      <td style="color:var(--text);font-weight:600">${c.purch}</td>
+      <td style="color:var(--text)">${hkd(c.rev)}</td>
       <td class="${cls}">${c.roas.toFixed(2)}x</td>
       <td>HK$ ${c.cpa.toFixed(0)}</td>
       <td>${c.hook.toFixed(1)}%</td>
