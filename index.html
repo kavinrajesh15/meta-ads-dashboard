@@ -171,16 +171,23 @@ async function boot(){
     if(!res.ok) throw new Error("HTTP "+res.status);
     rows=parse(await res.text());
     if(!rows.length) throw new Error("No data rows found");
-    const starts=[...new Set(rows.map(r=>r["Reporting starts"]).filter(Boolean))].sort();
-    const ends=[...new Set(rows.map(r=>r["Reporting ends"]).filter(Boolean))].sort();
-    from=starts[0]; to=ends[ends.length-1] || starts[starts.length-1];
-    build(starts, ends); setBrand("ALL");
+    // Both From & To use the SAME full date range (starts + ends combined)
+    const allDates=[...new Set([
+      ...rows.map(r=>r["Reporting starts"]).filter(Boolean),
+      ...rows.map(r=>r["Reporting ends"]).filter(Boolean)
+    ])].sort();
+    const minDate=allDates[0];
+    const maxDate=allDates[allDates.length-1];
+    from=minDate;
+    to=maxDate;
+    build(minDate, maxDate);
+    setBrand("ALL");
   }catch(e){
     app.innerHTML=`<div class="err"><b>Could not load live data</b><br><br>${e.message}<br><br>Check sheet is published as CSV and click Refresh.</div>`;
   }
 }
 
-function build(starts, ends){
+function build(minDate, maxDate){
   const brands=[...new Set(rows.map(r=>r.Brand).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
   document.getElementById("brands").innerHTML=
     `<button class="bb on" data-b="ALL" onclick="setBrand('ALL')">All Brands</button>`+
@@ -194,8 +201,8 @@ function build(starts, ends){
         <div class="sub" id="sub">${rows.length.toLocaleString()} ad rows · Live Google Sheet · ${from} → ${to}</div>
       </div>
       <div class="filters">
-        <label>From</label><input type="date" id="from" value="${from}" min="${starts[0]}" max="${starts[starts.length-1]}">
-        <label>To</label><input type="date" id="to" value="${to}" min="${starts[0]}" max="${ends[ends.length-1]||starts[starts.length-1]}">
+        <label>From</label><input type="date" id="from" value="${from}" min="${minDate}" max="${maxDate}">
+        <label>To</label><input type="date" id="to" value="${to}" min="${minDate}" max="${maxDate}">
         <button class="btn" onclick="applyDates()">Apply</button>
       </div>
     </div>
