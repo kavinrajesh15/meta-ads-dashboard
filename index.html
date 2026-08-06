@@ -142,15 +142,18 @@ async function boot(){
     if(!res.ok) throw new Error("HTTP "+res.status);
     rows=parse(await res.text());
     if(!rows.length) throw new Error("No data rows found");
-    const dates=[...new Set(rows.map(r=>r["Reporting starts"]).filter(Boolean))].sort();
-    from=dates[0]; to=dates[dates.length-1];
-    build(dates); setBrand("ALL");
+    const starts=[...new Set(rows.map(r=>r["Reporting starts"]).filter(Boolean))].sort();
+    const ends=[...new Set(rows.map(r=>r["Reporting ends"]).filter(Boolean))].sort();
+    const dates=starts;
+    from=starts[0]; to=ends[ends.length-1] || starts[starts.length-1];
+    build(starts, ends); setBrand("ALL");
   }catch(e){
     app.innerHTML=`<div class="err"><b>Could not load live data</b><br><br>${e.message}<br><br>Check sheet is published as CSV and click Refresh.</div>`;
   }
 }
 
-function build(dates){
+function build(starts, ends){
+  const dates=starts;
   const brands=[...new Set(rows.map(r=>r.Brand).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
   document.getElementById("brands").innerHTML=
     `<button class="bb on" data-b="ALL" onclick="setBrand('ALL')">All Brands</button>`+
@@ -164,8 +167,8 @@ function build(dates){
         <div class="sub" id="sub">${rows.length.toLocaleString()} ad rows · Live Google Sheet · ${from} → ${to}</div>
       </div>
       <div class="filters">
-        <label>From</label><input type="date" id="from" value="${from}" min="${dates[0]}" max="${dates[dates.length-1]}">
-        <label>To</label><input type="date" id="to" value="${to}" min="${dates[0]}" max="${dates[dates.length-1]}">
+        <label>From</label><input type="date" id="from" value="${from}" min="${starts[0]}" max="${starts[starts.length-1]}">
+        <label>To</label><input type="date" id="to" value="${to}" min="${starts[0]}" max="${ends[ends.length-1]||starts[starts.length-1]}">
         <button class="btn" onclick="applyDates()">Apply</button>
       </div>
     </div>
@@ -207,8 +210,9 @@ function filtered(){
   return rows.filter(r=>{
     if(brand!=="ALL"&&r.Brand!==brand) return false;
     const s=r["Reporting starts"]||"";
+    const e=r["Reporting ends"]||s;
     if(from&&s<from) return false;
-    if(to&&s>to) return false;
+    if(to&&e>to) return false;
     return true;
   });
 }
