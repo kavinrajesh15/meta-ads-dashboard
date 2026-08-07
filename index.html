@@ -13,8 +13,8 @@
   --surface:#0c1018;
   --card:#111827;
   --card2:#161f2e;
-  --border:#1e2a3a;
-  --border2:#283548;
+  --border:#1c2838;
+  --border2:#2a3a50;
   --text:#f1f5f9;
   --muted:#94a3b8;
   --dim:#64748b;
@@ -73,9 +73,9 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
 .kpi{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px 16px;position:relative;overflow:hidden;box-shadow:var(--shadow);transition:.2s}
 .kpi:hover{border-color:var(--border2);box-shadow:var(--glow)}
 .kpi:before{content:"";position:absolute;left:0;top:0;right:0;height:2.5px;background:var(--grad)}
-.kpi .l{font-size:10.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px}
-.kpi .v{font-size:23px;font-weight:800;letter-spacing:-.6px;line-height:1.1;color:var(--text)}
-.kpi .s{font-size:11.5px;color:var(--dim);margin-top:6px;font-weight:500}
+.kpi .l{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;margin-bottom:8px}
+.kpi .v{font-size:20px;font-weight:800;letter-spacing:-.4px;line-height:1.15;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kpi .s{font-size:11px;color:var(--dim);margin-top:5px;font-weight:500}
 .grid2{display:grid;grid-template-columns:1.35fr 1fr;gap:14px;margin:16px 0 20px}
 .panel{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
 .panel h3{font-size:12px;font-weight:700;color:var(--muted);margin-bottom:14px;text-transform:uppercase;letter-spacing:.5px}
@@ -146,7 +146,7 @@ function openMenu(){document.getElementById("dr").classList.add("show");document
 function closeMenu(){document.getElementById("dr").classList.remove("show");document.getElementById("bd").classList.remove("show")}
 function toggleTheme(){const h=document.documentElement,n=h.getAttribute("data-theme")==="dark"?"light":"dark";h.setAttribute("data-theme",n);document.getElementById("themeBtn").textContent=n==="dark"?"☾":"☀";renderCharts()}
 
-function split(line){const r=[];let c="",q=false;for(let i=0;i<line.length;i++){const ch=line[i];if(ch==='"'){q=!q;continue}if(ch===','&&!q){r.push(c);c="";continue}c+=ch}r.push(c);return r}
+function split(line){const r=[];let c="",q=false;for(let i=0;i<line.length;i++){const ch=line[i];if(ch==='\"'){q=!q;continue}if(ch===','&&!q){r.push(c);c="";continue}c+=ch}r.push(c);return r}
 function parse(text){
   const lines=text.split(/\r?\n/).filter(l=>l.trim());if(!lines.length)return[];
   const h=split(lines[0]);const out=[];
@@ -161,6 +161,8 @@ function parse(text){
 }
 function n(v){if(v==null||v===""||v==="-")return 0;const x=parseFloat(String(v).replace(/,/g,""));return isNaN(x)?0:x}
 function fmt(v){if(v>=1e6)return(v/1e6).toFixed(2)+"M";if(v>=1e3)return(v/1e3).toFixed(1)+"K";return Math.round(v).toLocaleString()}
+function fmtFull(v){const n=Math.round(Math.abs(v||0));const full=n.toLocaleString("en-US");if(v>=1e6)return full+" M";if(v>=1e3)return full+" K";return full}
+function hkdFull(v){return "HK$ "+fmtFull(v)}
 function hkd(v){return "HK$ "+fmt(v)}
 
 async function boot(){
@@ -278,15 +280,15 @@ function agg(list){
 function render(){
   const list=filtered(); const {a,camps,brands}=agg(list);
   document.getElementById("kpi1").innerHTML=`
-    <div class="kpi"><div class="l">Total Spend</div><div class="v" style="color:var(--meta2)">${hkd(a.spend)}</div><div class="s">HKD</div></div>
-    <div class="kpi"><div class="l">Revenue</div><div class="v" style="color:#4ade80">${hkd(a.rev)}</div><div class="s">Purchase value</div></div>
+    <div class="kpi"><div class="l">Total Spend</div><div class="v" style="color:var(--meta2)">${hkdFull(a.spend)}</div><div class="s">HKD</div></div>
+    <div class="kpi"><div class="l">Revenue</div><div class="v" style="color:#4ade80">${hkdFull(a.rev)}</div><div class="s">Purchase value</div></div>
     <div class="kpi"><div class="l">ROAS</div><div class="v" style="color:var(--cyan)">${a.roas.toFixed(2)}x</div><div class="s">Return on ad spend</div></div>
-    <div class="kpi"><div class="l">Purchases</div><div class="v" style="color:var(--amber)">${fmt(a.purch)}</div><div class="s">Conversions</div></div>
+    <div class="kpi"><div class="l">Purchases</div><div class="v" style="color:var(--amber)">${fmtFull(a.purch)}</div><div class="s">Conversions</div></div>
     <div class="kpi"><div class="l">CPA</div><div class="v" style="color:var(--purple)">HK$ ${a.cpa.toFixed(0)}</div><div class="s">Cost per purchase</div></div>`;
   document.getElementById("kpi2").innerHTML=`
-    <div class="kpi"><div class="l">Impressions</div><div class="v" style="color:var(--meta2)">${fmt(a.imps)}</div><div class="s">Total views</div></div>
-    <div class="kpi"><div class="l">Reach</div><div class="v" style="color:var(--cyan)">${fmt(a.reach)}</div><div class="s">Unique users</div></div>
-    <div class="kpi"><div class="l">Link Clicks</div><div class="v" style="color:#4ade80">${fmt(a.clicks)}</div><div class="s">CTR ${a.ctr.toFixed(2)}%</div></div>
+    <div class="kpi"><div class="l">Impressions</div><div class="v" style="color:var(--meta2)">${fmtFull(a.imps)}</div><div class="s">Total views</div></div>
+    <div class="kpi"><div class="l">Reach</div><div class="v" style="color:var(--cyan)">${fmtFull(a.reach)}</div><div class="s">Unique users</div></div>
+    <div class="kpi"><div class="l">Link Clicks</div><div class="v" style="color:#4ade80">${fmtFull(a.clicks)}</div><div class="s">CTR ${a.ctr.toFixed(2)}%</div></div>
     <div class="kpi"><div class="l">Hook Rate</div><div class="v" style="color:var(--amber)">${a.hookAvg.toFixed(1)}%</div><div class="s">Avg hook</div></div>
     <div class="kpi"><div class="l">Active Ads</div><div class="v" style="color:var(--pink)">${a.active}</div><div class="s">of ${a.ads} total</div></div>`;
   window.__camps=Object.entries(camps).map(([name,c])=>({
