@@ -98,7 +98,7 @@ tr:hover td{background:rgba(6,104,225,.05);color:var(--text)}
   </div>
 </header>
 
-<div id="app"><div class="center"><div><div class="sp"></div>Loading live Meta data...</div></div></div>
+<div id="app"><div class="center"><div><div class="sp"></div>Loading Meta data...</div></div></div>
 
 <script>
 const CSV="https://docs.google.com/spreadsheets/d/e/2PACX-1vSiL5WkAU2ik5pbR5OdtULPGsNbO7b2wrFV4MMebkkTrS75YgTNK92UHDSX8iwsD1ExZsR7khftXnZw/pub?output=csv";
@@ -132,7 +132,7 @@ function hkd(v){return "HK$ "+full(v)}
 
 async function boot(){
   const app=document.getElementById("app");
-  app.innerHTML=`<div class="center"><div><div class="sp"></div>Loading live Meta data...</div></div>`;
+  app.innerHTML=`<div class="center"><div><div class="sp"></div>Loading Meta data...</div></div>`;
   try{
     const res=await fetch(CSV+"&t="+Date.now(),{cache:"no-store"});
     if(!res.ok) throw new Error("HTTP "+res.status);
@@ -145,7 +145,7 @@ async function boot(){
     from=allDates[0]; to=allDates[allDates.length-1];
     build(from,to); setBrand("ALL");
   }catch(e){
-    app.innerHTML=`<div class="err"><b>Could not load live data</b><br><br>${e.message}<br><br>Check sheet is published as CSV and click Refresh.</div>`;
+    app.innerHTML=`<div class="err"><b>Could not load data</b><br><br>${e.message}<br><br>Please try again or click Refresh.</div>`;
   }
 }
 
@@ -160,7 +160,7 @@ function build(minDate,maxDate){
     <div class="head">
       <div>
         <h2 id="title">All Brands</h2>
-        <div class="sub" id="sub">${rows.length.toLocaleString()} ad rows · Live Google Sheet · ${from} → ${to}</div>
+        <div class="sub" id="sub">${rows.length.toLocaleString()} ad rows · ${from} → ${to}</div>
       </div>
       <div class="filters">
         <label>From</label><input type="date" id="from" value="${from}" min="${minDate}" max="${maxDate}">
@@ -241,7 +241,7 @@ function render(){
   const list=filtered(); const {a,camps,brands}=agg(list);
   const weekLabel = from && to ? `${from} → ${to}` : "";
   const sub=document.getElementById("sub");
-  if(sub) sub.textContent=`${list.length.toLocaleString()} ad rows · Live Google Sheet · ${weekLabel}`;
+  if(sub) sub.textContent=`${list.length.toLocaleString()} ad rows · ${weekLabel}`;
 
   document.getElementById("kpi1").innerHTML=`
     <div class="kpi" style="--c:linear-gradient(90deg,#0668E1,#4B9BFF)"><div class="l">Total Spend</div><div class="v">${usd(a.spend)}</div><div class="s">${hkd(a.spend)}</div></div>
