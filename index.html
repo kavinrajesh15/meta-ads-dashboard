@@ -24,9 +24,11 @@
 body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased}
 .nav{height:56px;background:rgba(12,16,24,.97);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 16px;gap:12px;position:sticky;top:0;z-index:100;width:100%}
 .brand{display:flex;align-items:center;gap:10px;flex-shrink:0;min-width:0}
-.brand .stl{font-size:12px;font-weight:800;color:var(--text);letter-spacing:.2px;line-height:1.1}
-.brand h1{font-size:14px;font-weight:700;margin:0;line-height:1.15}
-.brand p{font-size:10px;color:var(--muted);margin:0}
+.brand-logo{height:36px;width:auto;max-width:42px;border-radius:6px;object-fit:contain;flex-shrink:0;background:#fff;padding:2px}
+.brand-text{display:flex;flex-direction:column;gap:0;min-width:0}
+.brand-text .stl{font-size:12px;font-weight:800;color:var(--text);letter-spacing:.2px;line-height:1.1}
+.brand-text h1{font-size:14px;font-weight:700;margin:0;line-height:1.15}
+.brand-text p{font-size:10px;color:var(--muted);margin:0}
 .nav-center{flex:1;text-align:center;min-width:0}
 .nav-center .week{font-size:12.5px;font-weight:700}
 .nav-r{display:flex;align-items:center;gap:10px;flex-shrink:0;flex-wrap:wrap}
@@ -85,10 +87,11 @@ tr:hover td{background:rgba(6,104,225,.05);color:var(--text)}
 
 <header class="nav">
   <div class="brand">
-    <div> 
-      <div><img src="https://github.com/kavinrajesh15/meta-ads-dashboard/blob/main/solarlogo.png" height="50" width="40"></div>
-      <div class="stl"><h1>SOLAR TIME LTD </h1>        <h2>     -Meta Ads Manager</h2>        <p>Performance Dashboard</p>
-      </div>
+    <img class="brand-logo" src="solarlogo.png" alt="Solar Time Ltd" onerror="this.style.display='none'">
+    <div class="brand-text">
+      <div class="stl">SOLAR TIME LTD</div>
+      <h1>Meta Ads Manager</h1>
+      <p>Performance Dashboard</p>
     </div>
   </div>
   <div class="nav-center">
@@ -123,6 +126,22 @@ const dn=b=>NAME[b]||b;
 const HKD_TO_USD=0.128;
 
 let rows=[],brand="ALL",from="",to="",spendChart=null,roasChart=null,sortKey="spend",filterMin=0;
+
+function getWeekNumber(dateStr){
+  if(!dateStr) return null;
+  const d=new Date(dateStr+"T00:00:00");
+  if(isNaN(d)) return null;
+  d.setHours(0,0,0,0);
+  d.setDate(d.getDate()+3-(d.getDay()+6)%7);
+  const week1=new Date(d.getFullYear(),0,4);
+  return 1+Math.round(((d-week1)/86400000-3+(week1.getDay()+6)%7)/7);
+}
+
+function weekLabel(f,t){
+  const w=getWeekNumber(f)||getWeekNumber(t);
+  if(w) return `Week ${w} · ${f} → ${t}`;
+  return `${f} → ${t}`;
+}
 
 function toggleTheme(){
   const h=document.documentElement;
@@ -165,7 +184,7 @@ async function boot(){
     from=allDates[0]; to=allDates[allDates.length-1];
     document.getElementById("from").value=from;
     document.getElementById("to").value=to;
-    document.getElementById("navWeek").textContent=`${from} → ${to}`;
+    document.getElementById("navWeek").textContent=weekLabel(from,to);
     setBrand("ALL");
   }catch(e){
     app.innerHTML=`<div class="err"><b>Could not load data</b><br><br>${e.message}<br><br>Please try again or click Refresh.</div>`;
@@ -175,7 +194,7 @@ async function boot(){
 function applyDates(){
   from=document.getElementById("from").value;
   to=document.getElementById("to").value;
-  document.getElementById("navWeek").textContent=`${from} → ${to}`;
+  document.getElementById("navWeek").textContent=weekLabel(from,to);
   render();
 }
 
@@ -235,7 +254,7 @@ function render(){
     <div class="head">
       <div>
         <h2>${brand==="ALL"?"All Brands":dn(brand)}</h2>
-        <div class="sub">${list.length.toLocaleString()} ad rows · ${from} → ${to}</div>
+        <div class="sub">${list.length.toLocaleString()} ad rows · ${weekLabel(from,to)}</div>
       </div>
     </div>
     <div class="kpis" id="kpi1"></div>
@@ -298,7 +317,7 @@ function render(){
   document.getElementById("kpi3").innerHTML=`
     <div class="kpi" style="--c:linear-gradient(90deg,#7c3aed,#a78bfa)"><div class="l">Hold Rate</div><div class="v">${a.holdAvg.toFixed(1)}%</div><div class="s">Avg hold</div></div>
     <div class="kpi" style="--c:linear-gradient(90deg,#0668E1,#4B9BFF)"><div class="l">CTR</div><div class="v">${a.ctr.toFixed(2)}%</div><div class="s">Clicks ÷ Impressions</div></div>
-    <div class="kpi" style="--c:linear-gradient(90deg,#16a34a,#4ade80)"><div class="l">CPC</div><div class="v">${usd(a.cpc)}</div><div class="s">${hkd(a.cpc)}</div></div>
+    <div class="kpi" style="--c:linear-gradient(90deg,#16a34a,#4ade80)"><div class="l">CPC</div><div class="v">${usd(a.cpc)}</div><div class="s">${hkd(a.cpa)}</div></div>
     <div class="kpi" style="--c:linear-gradient(90deg,#d97706,#fbbf24)"><div class="l">Landing Page Views</div><div class="v">${full(a.lpv)}</div><div class="s">LPV</div></div>
     <div class="kpi" style="--c:linear-gradient(90deg,#db2777,#f472b6)"><div class="l">Active Ads</div><div class="v">${a.active}</div><div class="s">of ${a.ads} total</div></div>`;
 
