@@ -7,167 +7,170 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{
-  font-family:'Inter',system-ui,sans-serif;
-  background:#07090f;
-  color:#f1f5f9;
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  -webkit-font-smoothing:antialiased;
+body, html {
+  height: 100%;
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
-.login-wrap{
-  width:100%;
-  max-width:420px;
-  padding:20px;
+.hero {
+  min-height: 100vh;
+  background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url("spn.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
 }
-.login-card{
-  background:#0c1018;
-  border:1px solid #1c2838;
-  border-radius:16px;
-  padding:32px 28px;
-  box-shadow:0 20px 50px rgba(0,0,0,.5);
+.login-card {
+  background: rgba(12, 16, 24, 0.72);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 18px;
+  padding: 32px 28px;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.55);
+  width: 100%;
+  max-width: 420px;
+  color: #f1f5f9;
 }
-.brand{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  margin-bottom:28px;
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 26px;
 }
-.brand img{
-  height:42px;
-  width:auto;
-  border-radius:8px;
-  background:#fff;
-  padding:3px;
+.brand img {
+  height: 44px;
+  width: auto;
+  border-radius: 8px;
+  background: #fff;
+  padding: 3px;
 }
-.brand-text .stl{
-  font-size:11px;
-  font-weight:800;
-  letter-spacing:.4px;
-  color:#94a3b8;
-  text-transform:uppercase;
+.brand-text .stl {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .4px;
+  color: #94a3b8;
+  text-transform: uppercase;
 }
-.brand-text h1{
-  font-size:18px;
-  font-weight:800;
-  margin:2px 0 0;
+.brand-text h1 {
+  font-size: 18px;
+  font-weight: 800;
+  margin: 2px 0 0;
 }
-.brand-text p{
-  font-size:12px;
-  color:#64748b;
-  margin-top:2px;
+.brand-text p {
+  font-size: 12px;
+  color: #94a3b8;
+  margin-top: 2px;
 }
-label{
-  display:block;
-  font-size:12px;
-  font-weight:600;
-  color:#94a3b8;
-  margin-bottom:6px;
+label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #cbd5e1;
+  margin-bottom: 6px;
 }
-.form-group{margin-bottom:16px}
+.form-group { margin-bottom: 15px; }
 input[type="email"],
 input[type="password"],
-input[type="text"]{
-  width:100%;
-  background:#111827;
-  border:1px solid #1c2838;
-  border-radius:8px;
-  padding:11px 14px;
-  color:#f1f5f9;
-  font-size:14px;
-  font-family:inherit;
-  outline:none;
-  transition:.15s;
+input[type="text"] {
+  width: 100%;
+  background: rgba(255,255,255,0.92);
+  border: none;
+  border-radius: 8px;
+  padding: 11px 14px;
+  color: #0f172a;
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
 }
-input:focus{
-  border-color:#0668E1;
-  box-shadow:0 0 0 3px rgba(6,104,225,.2);
+input:focus {
+  box-shadow: 0 0 0 3px rgba(6,104,225,0.35);
 }
-.pwd-wrap{position:relative}
-.pwd-wrap input{padding-right:44px}
-.toggle-pwd{
-  position:absolute;
-  right:10px;
-  top:50%;
-  transform:translateY(-50%);
-  background:none;
-  border:none;
-  color:#64748b;
-  cursor:pointer;
-  font-size:16px;
-  padding:4px;
+.pwd-wrap { position: relative; }
+.pwd-wrap input { padding-right: 44px; }
+.toggle-pwd {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #64748b;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 4px;
 }
-.remember{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  margin-bottom:18px;
-  font-size:13px;
-  color:#94a3b8;
+.remember {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  font-size: 13px;
+  color: #cbd5e1;
 }
-.remember input{width:16px;height:16px;accent-color:#0668E1}
-.captcha-row{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  margin-bottom:8px;
+.remember input { width: 16px; height: 16px; accent-color: #0668E1; }
+.captcha-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
 }
-#captchaCanvas{
-  background:#111827;
-  border:1px solid #1c2838;
-  border-radius:6px;
+#captchaCanvas {
+  background: #f1f5f9;
+  border-radius: 6px;
 }
-.refresh-btn{
-  background:#161f2e;
-  border:1px solid #1c2838;
-  border-radius:6px;
-  color:#94a3b8;
-  width:40px;
-  height:40px;
-  cursor:pointer;
-  font-size:16px;
+.refresh-btn {
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 6px;
+  color: #e2e8f0;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  font-size: 16px;
 }
-.refresh-btn:hover{color:#f1f5f9;border-color:#0668E1}
-.submit-btn{
-  width:100%;
-  margin-top:8px;
-  background:linear-gradient(135deg,#0668E1 0%,#4B9BFF 100%);
-  border:none;
-  border-radius:8px;
-  padding:12px;
-  color:#fff;
-  font-weight:700;
-  font-size:14px;
-  cursor:pointer;
-  font-family:inherit;
-  transition:.15s;
+.refresh-btn:hover { background: rgba(255,255,255,0.25); }
+.submit-btn {
+  width: 100%;
+  margin-top: 6px;
+  background: linear-gradient(135deg, #0668E1 0%, #4B9BFF 100%);
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: .15s;
 }
-.submit-btn:hover{
-  filter:brightness(1.1);
-  box-shadow:0 4px 20px rgba(6,104,225,.35);
+.submit-btn:hover {
+  filter: brightness(1.08);
+  box-shadow: 0 4px 20px rgba(6,104,225,0.4);
 }
-.error-msg{
-  background:rgba(239,68,68,.1);
-  border:1px solid rgba(239,68,68,.3);
-  color:#fca5a5;
-  border-radius:8px;
-  padding:10px 14px;
-  font-size:13px;
-  margin-bottom:16px;
-  display:none;
+.error-msg {
+  background: rgba(239,68,68,0.18);
+  border: 1px solid rgba(239,68,68,0.4);
+  color: #fecaca;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 13px;
+  margin-bottom: 16px;
+  display: none;
 }
-.footer{
-  text-align:center;
-  margin-top:20px;
-  font-size:11px;
-  color:#475569;
+.footer {
+  text-align: center;
+  margin-top: 18px;
+  font-size: 11px;
+  color: rgba(255,255,255,0.45);
 }
 </style>
 </head>
 <body>
-<div class="login-wrap">
+<div class="hero">
   <div class="login-card">
     <div class="brand">
       <img src="solarlogo.png" alt="Solar Time Ltd" onerror="this.style.display='none'">
@@ -210,8 +213,9 @@ input:focus{
 
       <button type="submit" class="submit-btn">Sign In</button>
     </form>
+
+    <div class="footer">© 2026 Solar Time Ltd · Internal Use Only</div>
   </div>
-  <div class="footer">© 2026 Solar Time Ltd · Internal Use Only</div>
 </div>
 
 <script>
@@ -227,14 +231,12 @@ const errorMsg = document.getElementById("errorMsg");
 const form = document.getElementById("loginForm");
 let currentCaptcha = "";
 
-// Auto-fill if remembered
 if (localStorage.getItem("stl_saved_email") && localStorage.getItem("stl_saved_pass")) {
   emailInput.value = localStorage.getItem("stl_saved_email");
   passwordInput.value = localStorage.getItem("stl_saved_pass");
   document.getElementById("rememberMe").checked = true;
 }
 
-// Already logged in? Go to dashboard
 if (localStorage.getItem("stl_meta_logged_in") === "true") {
   window.location.href = "dashboard.html";
 }
@@ -260,21 +262,18 @@ function generateCaptcha() {
 function drawCaptcha() {
   currentCaptcha = generateCaptcha();
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = "#111827";
+  ctx.fillStyle = "#f1f5f9";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-  // noise lines
   for (let i = 0; i < 4; i++) {
-    ctx.strokeStyle = `hsl(${Math.random()*360},50%,45%)`;
+    ctx.strokeStyle = `hsl(${Math.random()*360},50%,40%)`;
     ctx.beginPath();
     ctx.moveTo(Math.random()*canvas.width, Math.random()*canvas.height);
     ctx.lineTo(Math.random()*canvas.width, Math.random()*canvas.height);
     ctx.stroke();
   }
-
   ctx.font = "bold 22px Inter, Arial";
   for (let i = 0; i < currentCaptcha.length; i++) {
-    ctx.fillStyle = `hsl(${Math.random()*360},70%,65%)`;
+    ctx.fillStyle = `hsl(${Math.random()*360},65%,35%)`;
     ctx.save();
     const x = 14 + i * 24;
     const y = 28 + (Math.random()*6 - 3);
@@ -296,10 +295,8 @@ function showError(msg) {
 form.addEventListener("submit", function(e) {
   e.preventDefault();
   errorMsg.style.display = "none";
-
   const email = emailInput.value.trim().toLowerCase();
   const pass = passwordInput.value;
-
   if (email !== ALLOWED_EMAIL) {
     showError("Access denied. Invalid username.");
     return;
@@ -314,8 +311,6 @@ form.addEventListener("submit", function(e) {
     drawCaptcha();
     return;
   }
-
-  // Success
   localStorage.setItem("stl_meta_logged_in", "true");
   if (document.getElementById("rememberMe").checked) {
     localStorage.setItem("stl_saved_email", emailInput.value.trim());
@@ -324,7 +319,6 @@ form.addEventListener("submit", function(e) {
     localStorage.removeItem("stl_saved_email");
     localStorage.removeItem("stl_saved_pass");
   }
-
   window.location.href = "dashboard.html";
 });
 </script>
