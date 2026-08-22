@@ -1,390 +1,332 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Solar Time Ltd - Meta Ads Performance</title>
+<title>Solar Time Ltd - Login</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <style>
-:root{
-  --bg:#07090f;--surface:#0c1018;--card:#111827;--card2:#161f2e;
-  --border:#1c2838;--border2:#2a3a50;--text:#f1f5f9;--muted:#94a3b8;--dim:#64748b;
-  --meta:#0668E1;--meta2:#4B9BFF;
-  --grad:linear-gradient(135deg,#0668E1 0%,#4B9BFF 45%,#8b5cf6 100%);
-  --radius:14px;--shadow:0 8px 32px rgba(0,0,0,.45);
-  --sidebar:220px;
-}
-[data-theme="light"]{
-  --bg:#f0f4f8;--surface:#fff;--card:#fff;--card2:#f8fafc;
-  --border:#e2e8f0;--border2:#cbd5e1;--text:#0f172a;--muted:#475569;--dim:#94a3b8;
-  --shadow:0 8px 28px rgba(15,23,42,.08);
-}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased}
-.nav{height:56px;background:rgba(12,16,24,.97);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 16px;gap:12px;position:sticky;top:0;z-index:100;width:100%}
-.brand{display:flex;align-items:center;gap:10px;flex-shrink:0;min-width:0}
-.brand-logo{height:36px;width:auto;max-width:42px;border-radius:6px;object-fit:contain;flex-shrink:0;background:#fff;padding:2px}
-.brand-text{display:flex;flex-direction:column;gap:0;min-width:0}
-.brand-text .stl{font-size:12px;font-weight:800;color:var(--text);letter-spacing:.2px;line-height:1.1}
-.brand-text h1{font-size:14px;font-weight:700;margin:0;line-height:1.15}
-.brand-text p{font-size:10px;color:var(--muted);margin:0}
-.nav-center{flex:1;text-align:center;min-width:0}
-.nav-center .week{font-size:12.5px;font-weight:700}
-.nav-r{display:flex;align-items:center;gap:10px;flex-shrink:0;flex-wrap:wrap}
-.nav-r .lnk2{color:var(--muted);font-size:12px;font-weight:600;white-space:nowrap}
-.ib{width:34px;height:34px;border-radius:8px;border:1px solid var(--border);background:var(--card2);color:var(--muted);cursor:pointer;display:grid;place-items:center;font-size:14px;transition:.15s}
-.ib:hover{color:var(--text);border-color:var(--meta)}
-.live{display:flex;align-items:center;gap:6px;padding:5px 10px;border-radius:999px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.28);color:#4ade80;font-size:11px;font-weight:700}
-.dot{width:6px;height:6px;border-radius:50%;background:#22c55e;box-shadow:0 0 8px #22c55e;animation:pulse 1.5s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-.datebox{display:flex;align-items:center;gap:6px;background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:5px 10px}
-.datebox label{font-size:10px;color:var(--dim);font-weight:700;text-transform:uppercase}
-.datebox input{background:transparent;border:0;color:var(--text);font-size:12px;outline:0;font-family:inherit;width:110px}
-.btn{border:0;background:var(--grad);color:#fff;font-weight:700;font-size:12px;padding:6px 12px;border-radius:7px;cursor:pointer;font-family:inherit}
-.dr{position:fixed;top:56px;left:0;bottom:0;width:var(--sidebar);background:var(--surface);border-right:1px solid var(--border);z-index:50;padding:14px 10px;overflow:auto}
-.dr-h{margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border)}
-.dr-h h3{font-size:10px;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:.6px}
-.bb{width:100%;text-align:left;border:1px solid transparent;background:transparent;color:var(--muted);padding:9px 11px;border-radius:8px;cursor:pointer;font-size:12.5px;font-weight:600;margin-bottom:2px;transition:.12s;font-family:inherit}
-.bb:hover{background:var(--card2);color:var(--text)}
-.bb.on{background:rgba(6,104,225,.14);border-color:rgba(6,104,225,.4);color:var(--meta2)}
-.wrap{margin-left:var(--sidebar);padding:18px 20px 48px;max-width:100%}
-.head{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap;margin-bottom:14px}
-.head h2{font-size:20px;font-weight:800;letter-spacing:-.3px}
-.head .sub{font-size:12px;color:var(--muted);margin-top:3px;font-weight:500}
-.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:10px}
-.kpi{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px 13px;position:relative;overflow:hidden;box-shadow:var(--shadow)}
-.kpi:before{content:"";position:absolute;left:0;top:0;right:0;height:2.5px;background:var(--c,var(--grad))}
-.kpi .l{font-size:9.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}
-.kpi .v{font-size:17px;font-weight:800;letter-spacing:-.3px;line-height:1.15;color:var(--text)}
-.kpi .s{font-size:10.5px;color:var(--dim);margin-top:3px;font-weight:500}
-.grid2{display:grid;grid-template-columns:1.4fr 1fr;gap:12px;margin:12px 0 16px}
-.panel{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:15px;box-shadow:var(--shadow)}
-.panel h3{font-size:11px;font-weight:700;color:var(--muted);margin-bottom:10px;text-transform:uppercase;letter-spacing:.4px}
-.ch{height:320px;position:relative}
-.tc{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
-.th{display:flex;justify-content:space-between;align-items:center;padding:13px 15px;border-bottom:1px solid var(--border);gap:10px;flex-wrap:wrap}
-.th h3{font-size:13px;font-weight:700}
-.th-right{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.search{width:200px;background:var(--card2);border:1px solid var(--border2);color:var(--text);border-radius:8px;padding:7px 11px;font-size:12.5px;outline:0;font-family:inherit}
-.sel{background:var(--card2);border:1px solid var(--border2);color:var(--text);border-radius:8px;padding:7px 10px;font-size:12px;outline:0;font-family:inherit;cursor:pointer}
-.active-pill{display:flex;align-items:center;gap:6px;padding:6px 11px;border-radius:8px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.28);color:#4ade80;font-size:12px;font-weight:700;white-space:nowrap}
-.scroll{max-height:560px;overflow:auto}
-table{width:100%;border-collapse:collapse;font-size:12px}
-th{position:sticky;top:0;z-index:1;background:#0e1624;color:var(--muted);text-align:left;font-size:10px;letter-spacing:.4px;text-transform:uppercase;padding:10px 11px;border-bottom:2px solid var(--border2);white-space:nowrap;font-weight:700}
-td{padding:10px 11px;border-bottom:1px solid #152033;color:var(--muted);white-space:nowrap;font-weight:500}
-tr:hover td{background:rgba(6,104,225,.05);color:var(--text)}
-.hi{color:#4ade80;font-weight:800}.mid{color:#fbbf24;font-weight:800}.lo{color:#f87171;font-weight:800}
-.center{min-height:65vh;display:grid;place-items:center;color:var(--muted);text-align:center}
-.sp{width:40px;height:40px;border:3px solid var(--border);border-top-color:var(--meta);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 12px}
-@keyframes spin{to{transform:rotate(360deg)}}
-.err{max-width:480px;margin:40px auto;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.3);color:#fca5a5;border-radius:12px;padding:20px;line-height:1.55}
-@media(max-width:1100px){.kpis{grid-template-columns:repeat(3,1fr)}.grid2{grid-template-columns:1fr}}
-@media(max-width:700px){.kpis{grid-template-columns:repeat(2,1fr)}.search{width:100%}.dr{display:none}.wrap{margin-left:0}}
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  background:#07090f;
+  color:#f1f5f9;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  -webkit-font-smoothing:antialiased;
+}
+.login-wrap{
+  width:100%;
+  max-width:420px;
+  padding:20px;
+}
+.login-card{
+  background:#0c1018;
+  border:1px solid #1c2838;
+  border-radius:16px;
+  padding:32px 28px;
+  box-shadow:0 20px 50px rgba(0,0,0,.5);
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:28px;
+}
+.brand img{
+  height:42px;
+  width:auto;
+  border-radius:8px;
+  background:#fff;
+  padding:3px;
+}
+.brand-text .stl{
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.4px;
+  color:#94a3b8;
+  text-transform:uppercase;
+}
+.brand-text h1{
+  font-size:18px;
+  font-weight:800;
+  margin:2px 0 0;
+}
+.brand-text p{
+  font-size:12px;
+  color:#64748b;
+  margin-top:2px;
+}
+label{
+  display:block;
+  font-size:12px;
+  font-weight:600;
+  color:#94a3b8;
+  margin-bottom:6px;
+}
+.form-group{margin-bottom:16px}
+input[type="email"],
+input[type="password"],
+input[type="text"]{
+  width:100%;
+  background:#111827;
+  border:1px solid #1c2838;
+  border-radius:8px;
+  padding:11px 14px;
+  color:#f1f5f9;
+  font-size:14px;
+  font-family:inherit;
+  outline:none;
+  transition:.15s;
+}
+input:focus{
+  border-color:#0668E1;
+  box-shadow:0 0 0 3px rgba(6,104,225,.2);
+}
+.pwd-wrap{position:relative}
+.pwd-wrap input{padding-right:44px}
+.toggle-pwd{
+  position:absolute;
+  right:10px;
+  top:50%;
+  transform:translateY(-50%);
+  background:none;
+  border:none;
+  color:#64748b;
+  cursor:pointer;
+  font-size:16px;
+  padding:4px;
+}
+.remember{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-bottom:18px;
+  font-size:13px;
+  color:#94a3b8;
+}
+.remember input{width:16px;height:16px;accent-color:#0668E1}
+.captcha-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:8px;
+}
+#captchaCanvas{
+  background:#111827;
+  border:1px solid #1c2838;
+  border-radius:6px;
+}
+.refresh-btn{
+  background:#161f2e;
+  border:1px solid #1c2838;
+  border-radius:6px;
+  color:#94a3b8;
+  width:40px;
+  height:40px;
+  cursor:pointer;
+  font-size:16px;
+}
+.refresh-btn:hover{color:#f1f5f9;border-color:#0668E1}
+.submit-btn{
+  width:100%;
+  margin-top:8px;
+  background:linear-gradient(135deg,#0668E1 0%,#4B9BFF 100%);
+  border:none;
+  border-radius:8px;
+  padding:12px;
+  color:#fff;
+  font-weight:700;
+  font-size:14px;
+  cursor:pointer;
+  font-family:inherit;
+  transition:.15s;
+}
+.submit-btn:hover{
+  filter:brightness(1.1);
+  box-shadow:0 4px 20px rgba(6,104,225,.35);
+}
+.error-msg{
+  background:rgba(239,68,68,.1);
+  border:1px solid rgba(239,68,68,.3);
+  color:#fca5a5;
+  border-radius:8px;
+  padding:10px 14px;
+  font-size:13px;
+  margin-bottom:16px;
+  display:none;
+}
+.footer{
+  text-align:center;
+  margin-top:20px;
+  font-size:11px;
+  color:#475569;
+}
 </style>
 </head>
 <body>
-
-<header class="nav">
-  <div class="brand">
-    <img class="brand-logo" src="solarlogo.png" alt="Solar Time Ltd" onerror="this.style.display='none'">
-    <div class="brand-text">
-      <div class="stl">SOLAR TIME LTD</div>
-      <h1>Meta Ads Manager</h1>
-      <p>Performance Dashboard</p>
-    </div>
-  </div>
-  <div class="nav-center">
-    <div class="week" id="navWeek">Loading...</div>
-  </div>
-  <div class="nav-r">
-    <span class="lnk2">Welcome Asok</span>
-    <div class="datebox">
-      <label>From</label>
-      <input type="date" id="from">
-      <label>To</label>
-      <input type="date" id="to">
-      <button class="btn" onclick="applyDates()">Apply</button>
-    </div>
-    <div class="live"><span class="dot"></span>LIVE</div>
-    <button class="ib" onclick="boot()" title="Refresh">↻</button>
-    <button class="ib" id="themeBtn" onclick="toggleTheme()" title="Theme">☾</button>
-  </div>
-</header>
-
-<aside class="dr" id="dr">
-  <div class="dr-h"><h3>Brands</h3></div>
-  <div id="brands"></div>
-</aside>
-
-<div id="app"><div class="center"><div><div class="sp"></div>Loading Meta data...</div></div></div>
-
-<script>
-const CSV="https://docs.google.com/spreadsheets/d/e/2PACX-1vSiL5WkAU2ik5pbR5OdtULPGsNbO7b2wrFV4MMebkkTrS75YgTNK92UHDSX8iwsD1ExZsR7khftXnZw/pub?output=csv";
-const NAME={"AVI-8 International":"AVI-8","Earnshaw International":"Thomas Earnshaw","Spinnaker International":"Spinnaker","Cadola Watches":"Cadola","Duxot Watches":"Duxot","RGMT Watches":"RGMT","Nubeo":"Nubeo"};
-const dn=b=>NAME[b]||b;
-const HKD_TO_USD=0.128;
-
-let rows=[],brand="ALL",from="",to="",spendChart=null,roasChart=null,sortKey="spend",filterMin=0;
-
-function getWeekNumber(dateStr){
-  if(!dateStr) return null;
-  const d=new Date(dateStr+"T00:00:00");
-  if(isNaN(d)) return null;
-  d.setHours(0,0,0,0);
-  d.setDate(d.getDate()+3-(d.getDay()+6)%7);
-  const week1=new Date(d.getFullYear(),0,4);
-  return 1+Math.round(((d-week1)/86400000-3+(week1.getDay()+6)%7)/7);
-}
-
-function weekLabel(f,t){
-  const w=getWeekNumber(f)||getWeekNumber(t);
-  if(w) return `Week ${w} · ${f} → ${t}`;
-  return `${f} → ${t}`;
-}
-
-function toggleTheme(){
-  const h=document.documentElement;
-  const n=h.getAttribute("data-theme")==="dark"?"light":"dark";
-  h.setAttribute("data-theme",n);
-  document.getElementById("themeBtn").textContent=n==="dark"?"☾":"☀";
-  renderCharts();
-}
-function split(line){const r=[];let c="",q=false;for(let i=0;i<line.length;i++){const ch=line[i];if(ch==='\"'){q=!q;continue}if(ch===','&&!q){r.push(c);c="";continue}c+=ch}r.push(c);return r}
-function parse(text){
-  const lines=text.split(/\r?\n/).filter(l=>l.trim());if(!lines.length)return[];
-  const h=split(lines[0]);const out=[];
-  for(let i=1;i<lines.length;i++){
-    const v=split(lines[i]);if(v.length<6)continue;
-    const o={};h.forEach((k,idx)=>o[k]=v[idx]??"");
-    if(!o.Brand||o.Brand==="Brand")continue;
-    if(o["Amount spent (HKD)"]==="Amount spent (HKD)")continue;
-    out.push(o);
-  }
-  return out;
-}
-function n(v){if(v==null||v===""||v==="-")return 0;const x=parseFloat(String(v).replace(/,/g,""));return isNaN(x)?0:x}
-function full(v){return Math.round(Math.abs(v||0)).toLocaleString("en-US")}
-function usd(v){return "US$ "+full((v||0)*HKD_TO_USD)}
-function hkd(v){return "HK$ "+full(v)}
-function safe(v,d=0){return (v===undefined||v===null||isNaN(v))?d:Number(v)}
-
-async function boot(){
-  const app=document.getElementById("app");
-  app.innerHTML=`<div class="center"><div><div class="sp"></div>Loading Meta data...</div></div>`;
-  try{
-    const res=await fetch(CSV+"&t="+Date.now(),{cache:"no-store"});
-    if(!res.ok) throw new Error("HTTP "+res.status);
-    rows=parse(await res.text());
-    if(!rows.length) throw new Error("No data rows found");
-    const allDates=[...new Set([
-      ...rows.map(r=>r["Reporting starts"]).filter(Boolean),
-      ...rows.map(r=>r["Reporting ends"]).filter(Boolean)
-    ])].sort();
-    from=allDates[0]; to=allDates[allDates.length-1];
-    document.getElementById("from").value=from;
-    document.getElementById("to").value=to;
-    document.getElementById("navWeek").textContent=weekLabel(from,to);
-    setBrand("ALL");
-  }catch(e){
-    app.innerHTML=`<div class="err"><b>Could not load data</b><br><br>${e.message}<br><br>Please try again or click Refresh.</div>`;
-  }
-}
-
-function applyDates(){
-  from=document.getElementById("from").value;
-  to=document.getElementById("to").value;
-  document.getElementById("navWeek").textContent=weekLabel(from,to);
-  render();
-}
-
-function setBrand(b){
-  brand=b;
-  document.querySelectorAll(".bb").forEach(el=>el.classList.toggle("on",el.dataset.b===b));
-  render();
-}
-
-function filtered(){
-  return rows.filter(r=>{
-    if(brand!=="ALL"&&r.Brand!==brand) return false;
-    const s=r["Reporting starts"]||"";
-    const e=r["Reporting ends"]||s;
-    if(from&&s<from) return false;
-    if(to&&e>to) return false;
-    return true;
-  });
-}
-
-function agg(list){
-  const a={spend:0,imps:0,reach:0,clicks:0,lpv:0,purch:0,atc:0,rev:0,ads:0,active:0,hook:0,hold:0,hookN:0,holdN:0};
-  const camps={}, brands={};
-  list.forEach(r=>{
-    const spend=n(r["Amount spent (HKD)"]),imps=n(r.Impressions),reach=n(r.Reach);
-    const clicks=n(r["LINK CLICKS"]),lpv=n(r["Landing page views"]),purch=n(r.Purchases);
-    const atc=n(r["Add to cart"]),rev=n(r["Purchase value"]),st=r["Ad delivery"]||"";
-    const hook=n(r["Hook Rate (%)"]),hold=n(r["Hold Rate (%)"]);
-    const cname=r["Campaign name"]||"Unknown", b=r.Brand||"Unknown";
-    a.spend+=spend;a.imps+=imps;a.reach+=reach;a.clicks+=clicks;a.lpv+=lpv;a.purch+=purch;a.atc+=atc;a.rev+=rev;a.ads++;
-    if(st==="ACTIVE") a.active++;
-    if(hook>0){a.hook+=hook;a.hookN++} if(hold>0){a.hold+=hold;a.holdN++}
-    if(!brands[b]) brands[b]={spend:0,rev:0};
-    brands[b].spend+=spend; brands[b].rev+=rev;
-    if(!camps[cname]) camps[cname]={brand:b,spend:0,imps:0,clicks:0,lpv:0,atc:0,purch:0,rev:0,hook:0,hold:0,hookN:0,holdN:0};
-    const c=camps[cname];
-    c.spend+=spend;c.imps+=imps;c.clicks+=clicks;c.lpv+=lpv;c.atc+=atc;c.purch+=purch;c.rev+=rev;
-    if(hook>0){c.hook+=hook;c.hookN++} if(hold>0){c.hold+=hold;c.holdN++}
-  });
-  a.roas=a.spend?a.rev/a.spend:0; a.cpc=a.clicks?a.spend/a.clicks:0;
-  a.ctr=a.imps?a.clicks/a.imps*100:0; a.cpa=a.purch?a.spend/a.purch:0;
-  a.hookAvg=a.hookN?a.hook/a.hookN:0; a.holdAvg=a.holdN?a.hold/a.holdN:0;
-  return {a,camps,brands};
-}
-
-function render(){
-  const list=filtered();
-  const {a,camps,brands}=agg(list);
-
-  const brandList=[...new Set(rows.map(r=>r.Brand).filter(Boolean))].sort((x,y)=>x.localeCompare(y));
-  document.getElementById("brands").innerHTML=
-    `<button class="bb ${brand==="ALL"?"on":""}" data-b="ALL" onclick="setBrand('ALL')">All Brands</button>`+
-    brandList.map(b=>`<button class="bb ${brand===b?"on":""}" data-b="${b}" onclick="setBrand('${b}')">${dn(b)}</button>`).join("");
-
-  document.getElementById("app").innerHTML=`
-  <div class="wrap">
-    <div class="head">
-      <div>
-        <h2>${brand==="ALL"?"All Brands":dn(brand)}</h2>
-        <div class="sub">${list.length.toLocaleString()} ad rows · ${weekLabel(from,to)}</div>
+<div class="login-wrap">
+  <div class="login-card">
+    <div class="brand">
+      <img src="solarlogo.png" alt="Solar Time Ltd" onerror="this.style.display='none'">
+      <div class="brand-text">
+        <div class="stl">Solar Time Ltd</div>
+        <h1>Meta Ads Manager</h1>
+        <p>Secure Login</p>
       </div>
     </div>
-    <div class="kpis" id="kpi1"></div>
-    <div class="kpis" id="kpi2"></div>
-    <div class="kpis" id="kpi3"></div>
-    <div class="grid2">
-      <div class="panel"><h3>Spend vs Revenue ${brand==="ALL"?"by Brand":""} (HK$)</h3><div class="ch"><canvas id="cSpend"></canvas></div></div>
-      <div class="panel"><h3>ROAS ${brand==="ALL"?"by Brand":""}</h3><div class="ch"><canvas id="cRoas"></canvas></div></div>
-    </div>
-    <div class="tc">
-      <div class="th">
-        <h3>Campaign Performance</h3>
-        <div class="th-right">
-          <div class="active-pill">● Active Ads: ${a.active} / ${a.ads}</div>
-          <select class="sel" onchange="sortKey=this.value;drawTable()">
-            <option value="spend">Sort: Spend</option>
-            <option value="rev">Sort: Revenue</option>
-            <option value="roas">Sort: ROAS</option>
-            <option value="purch">Sort: Purchases</option>
-            <option value="ctr">Sort: CTR</option>
-          </select>
-          <select class="sel" onchange="filterMin=Number(this.value);drawTable()">
-            <option value="0">Filter: All</option>
-            <option value="1000">Spend ≥ HK$1,000</option>
-            <option value="5000">Spend ≥ HK$5,000</option>
-            <option value="10000">Spend ≥ HK$10,000</option>
-          </select>
-          <input class="search" id="q" placeholder="Search campaign / brand..." oninput="drawTable()">
+
+    <div class="error-msg" id="errorMsg"></div>
+
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="email">Username / Email</label>
+        <input type="email" id="email" required placeholder="sales@solartimeltd.com" autocomplete="username">
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <div class="pwd-wrap">
+          <input type="password" id="password" required placeholder="Enter password" autocomplete="current-password">
+          <button type="button" class="toggle-pwd" id="togglePwd" title="Show/Hide">👁️</button>
         </div>
       </div>
-      <div class="scroll">
-        <table>
-          <thead>
-            <tr>
-              <th>Campaign</th><th>Brand</th><th>Spend</th><th>Impr.</th><th>Clicks</th>
-              <th>CTR</th><th>CPC</th><th>LPV</th><th>ATC</th><th>Purchases</th>
-              <th>Revenue</th><th>ROAS</th><th>CPA</th><th>Hook%</th><th>Hold%</th>
-            </tr>
-          </thead>
-          <tbody id="tbody"></tbody>
-        </table>
+
+      <div class="remember">
+        <input type="checkbox" id="rememberMe">
+        <label for="rememberMe" style="margin:0;cursor:pointer">Remember me</label>
       </div>
-    </div>
-  </div>`;
 
-  document.getElementById("kpi1").innerHTML=`
-    <div class="kpi" style="--c:linear-gradient(90deg,#0668E1,#4B9BFF)"><div class="l">Total Spend</div><div class="v">${usd(a.spend)}</div><div class="s">${hkd(a.spend)}</div></div>
-    <div class="kpi" style="--c:linear-gradient(90deg,#16a34a,#4ade80)"><div class="l">Revenue</div><div class="v">${usd(a.rev)}</div><div class="s">${hkd(a.rev)}</div></div>
-    <div class="kpi" style="--c:linear-gradient(90deg,#7c3aed,#a78bfa)"><div class="l">ROAS</div><div class="v">${a.roas.toFixed(2)}x</div><div class="s">Revenue ÷ Spend</div></div>
-    <div class="kpi" style="--c:linear-gradient(90deg,#d97706,#fbbf24)"><div class="l">Purchases</div><div class="v">${full(a.purch)}</div><div class="s">Conversions</div></div>
-    <div class="kpi" style="--c:linear-gradient(90deg,#0891b2,#22d3ee)"><div class="l">CPA</div><div class="v">${usd(a.cpa)}</div><div class="s">${hkd(a.cpa)}</div></div>`;
+      <div class="form-group">
+        <label>CAPTCHA</label>
+        <div class="captcha-row">
+          <canvas id="captchaCanvas" width="140" height="40"></canvas>
+          <button type="button" class="refresh-btn" id="refreshBtn" title="Refresh">🔄</button>
+        </div>
+        <input type="text" id="captchaInput" required placeholder="Type the text above" style="margin-top:8px" autocomplete="off">
+      </div>
 
-  document.getElementById("kpi2").innerHTML=`
-    <div class="kpi" style="--c:linear-gradient(90deg,#0668E1,#4B9BFF)"><div class="l">Impressions</div><div class="v">${full(a.imps)}</div><div class="s">Total views</div></div>
-    <div class="kpi" style="--c:linear-gradient(90deg,#0891b2,#22d3ee)"><div class="l">Reach</div><div class="v">${full(a.reach)}</div><div class="s">Unique users</div></div>
-    <div class="kpi" style="--c:linear-gradient(90deg,#16a34a,#4ade80)"><div class="l">Link Clicks</div><div class="v">${full(a.clicks)}</div><div class="s">CTR ${a.ctr.toFixed(2)}%</div></div>
-    <div class="kpi" style="--c:linear-gradient(90deg,#d97706,#fbbf24)"><div class="l">Add to Cart</div><div class="v">${full(a.atc)}</div><div class="s">Total ATC</div></div>
-    <div class="kpi" style="--c:linear-gradient(90deg,#db2777,#f472b6)"><div class="l">Hook Rate</div><div class="v">${a.hookAvg.toFixed(1)}%</div><div class="s">Avg hook</div></div>`;
+      <button type="submit" class="submit-btn">Sign In</button>
+    </form>
+  </div>
+  <div class="footer">© 2026 Solar Time Ltd · Internal Use Only</div>
+</div>
 
-  document.getElementById("kpi3").innerHTML=`
-    <div class="kpi" style="--c:linear-gradient(90deg,#7c3aed,#a78bfa)"><div class="l">Hold Rate</div><div class="v">${a.holdAvg.toFixed(1)}%</div><div class="s">Avg hold</div></div>
-    <div class="kpi" style="--c:linear-gradient(90deg,#0668E1,#4B9BFF)"><div class="l">CTR</div><div class="v">${a.ctr.toFixed(2)}%</div><div class="s">Clicks ÷ Impressions</div></div>
-    <div class="kpi" style="--c:linear-gradient(90deg,#16a34a,#4ade80)"><div class="l">CPC</div><div class="v">${usd(a.cpc)}</div><div class="s">${hkd(a.cpa)}</div></div>
-    <div class="kpi" style="--c:linear-gradient(90deg,#d97706,#fbbf24)"><div class="l">Landing Page Views</div><div class="v">${full(a.lpv)}</div><div class="s">LPV</div></div>
-    <div class="kpi" style="--c:linear-gradient(90deg,#db2777,#f472b6)"><div class="l">Active Ads</div><div class="v">${a.active}</div><div class="s">of ${a.ads} total</div></div>`;
+<script>
+const ALLOWED_EMAIL = "sales@solartimeltd.com";
+const ALLOWED_PASSWORD = "Solar123$";
 
-  window.__camps=Object.entries(camps).map(([name,c])=>({
-    name,brand:c.brand,spend:c.spend,imps:c.imps,clicks:c.clicks,lpv:c.lpv,atc:c.atc,purch:c.purch,rev:c.rev,
-    roas:c.spend?c.rev/c.spend:0,cpc:c.clicks?c.spend/c.clicks:0,ctr:c.imps?c.clicks/c.imps*100:0,cpa:c.purch?c.spend/c.purch:0,
-    hook:c.hookN?c.hook/c.hookN:0,hold:c.holdN?c.hold/c.holdN:0
-  }));
-  window.__brands=brands;
-  renderCharts();
-  drawTable();
+const canvas = document.getElementById("captchaCanvas");
+const ctx = canvas.getContext("2d");
+const emailInput = document.getElementById("email");
+const passwordInput = document.getElementById("password");
+const captchaInput = document.getElementById("captchaInput");
+const errorMsg = document.getElementById("errorMsg");
+const form = document.getElementById("loginForm");
+let currentCaptcha = "";
+
+// Auto-fill if remembered
+if (localStorage.getItem("stl_saved_email") && localStorage.getItem("stl_saved_pass")) {
+  emailInput.value = localStorage.getItem("stl_saved_email");
+  passwordInput.value = localStorage.getItem("stl_saved_pass");
+  document.getElementById("rememberMe").checked = true;
 }
 
-function renderCharts(){
-  const dark=document.documentElement.getAttribute("data-theme")==="dark";
-  const tick=dark?"#94a3b8":"#64748b";
-  const grid=dark?"rgba(148,163,184,.07)":"rgba(100,116,139,.12)";
-  const b=window.__brands||{};
-  let names=Object.keys(b).sort((x,y)=>b[y].spend-b[x].spend);
-  if(brand!=="ALL") names=names.filter(n=>n===brand);
-  const labels=names.map(dn), spends=names.map(x=>b[x].spend), revs=names.map(x=>b[x].rev), roas=names.map(x=>b[x].spend?b[x].rev/b[x].spend:0);
-  if(spendChart) spendChart.destroy(); if(roasChart) roasChart.destroy();
-  const cs=document.getElementById("cSpend"), cr=document.getElementById("cRoas"); if(!cs||!cr) return;
-
-  spendChart=new Chart(cs,{type:"bar",data:{labels,datasets:[
-    {label:"Spend",data:spends,backgroundColor:"rgba(75,155,255,.85)",borderRadius:6,borderSkipped:false},
-    {label:"Revenue",data:revs,backgroundColor:"rgba(34,197,94,.85)",borderRadius:6,borderSkipped:false}
-  ]},
-  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,labels:{color:tick,font:{size:11,family:"Inter"}}},tooltip:{backgroundColor:"#0c1018",titleColor:"#f1f5f9",bodyColor:"#94a3b8",borderColor:"#1e2a3a",borderWidth:1,padding:12,cornerRadius:10}},
-    scales:{x:{ticks:{color:tick,font:{size:11,weight:600,family:"Inter"},maxRotation:0,autoSkip:false},grid:{display:false},border:{display:false}},y:{ticks:{color:tick,font:{size:11,family:"Inter"},callback:v=>full(v)},grid:{color:grid},border:{display:false}}}}});
-
-  roasChart=new Chart(cr,{type:"bar",data:{labels,datasets:[{data:roas,backgroundColor:roas.map(v=>v>=2.5?"rgba(34,197,94,.85)":v>=2?"rgba(245,158,11,.85)":"rgba(239,68,68,.75)"),borderRadius:6,borderSkipped:false}]},
-  options:{indexAxis:"y",responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{backgroundColor:"#0c1018",titleColor:"#f1f5f9",bodyColor:"#94a3b8",borderColor:"#1e2a3a",borderWidth:1,padding:12,cornerRadius:10}},
-    scales:{x:{ticks:{color:tick,font:{size:11,family:"Inter"}},grid:{color:grid},border:{display:false}},y:{ticks:{color:tick,font:{size:11,weight:600,family:"Inter"},autoSkip:false},grid:{display:false},border:{display:false}}}}});
+// Already logged in? Go to dashboard
+if (localStorage.getItem("stl_meta_logged_in") === "true") {
+  window.location.href = "dashboard.html";
 }
 
-function drawTable(){
-  const q=(document.getElementById("q")?.value||"").toLowerCase();
-  let list=(window.__camps||[]).slice();
-  if(filterMin>0) list=list.filter(c=>(c.spend||0)>=filterMin);
-  if(q) list=list.filter(c=>c.name.toLowerCase().includes(q)||dn(c.brand).toLowerCase().includes(q));
-  list.sort((a,b)=>(b[sortKey]||0)-(a[sortKey]||0));
-  const tb=document.getElementById("tbody"); if(!tb) return;
-  if(!list.length){tb.innerHTML=`<tr><td colspan="15" style="text-align:center;padding:40px;color:var(--dim)">No campaigns</td></tr>`;return}
-  tb.innerHTML=list.slice(0,200).map(c=>{
-    const cls=c.roas>=2.5?"hi":c.roas>=2?"mid":"lo";
-    return `<tr>
-      <td style="color:var(--text);font-weight:600;max-width:240px;overflow:hidden;text-overflow:ellipsis" title="${c.name}">${c.name}</td>
-      <td style="color:var(--text);font-weight:500">${dn(c.brand)}</td>
-      <td style="color:var(--text)">${hkd(c.spend)}</td>
-      <td>${full(c.imps)}</td>
-      <td>${full(c.clicks)}</td>
-      <td>${c.ctr.toFixed(2)}%</td>
-      <td>${hkd(c.cpc)}</td>
-      <td>${full(c.lpv)}</td>
-      <td>${full(c.atc)}</td>
-      <td style="color:var(--text);font-weight:600">${c.purch}</td>
-      <td style="color:var(--text)">${hkd(c.rev)}</td>
-      <td class="${cls}">${c.roas.toFixed(2)}x</td>
-      <td>${hkd(c.cpa)}</td>
-      <td>${c.hook.toFixed(1)}%</td>
-      <td>${c.hold.toFixed(1)}%</td>
-    </tr>`;
-  }).join("");
+document.getElementById("togglePwd").addEventListener("click", function() {
+  const t = passwordInput.getAttribute("type");
+  if (t === "password") {
+    passwordInput.setAttribute("type", "text");
+    this.textContent = "🙈";
+  } else {
+    passwordInput.setAttribute("type", "password");
+    this.textContent = "👁️";
+  }
+});
+
+function generateCaptcha() {
+  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789";
+  let code = "";
+  for (let i = 0; i < 5; i++) code += chars.charAt(Math.floor(Math.random() * chars.length));
+  return code;
 }
 
-boot();
+function drawCaptcha() {
+  currentCaptcha = generateCaptcha();
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = "#111827";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  // noise lines
+  for (let i = 0; i < 4; i++) {
+    ctx.strokeStyle = `hsl(${Math.random()*360},50%,45%)`;
+    ctx.beginPath();
+    ctx.moveTo(Math.random()*canvas.width, Math.random()*canvas.height);
+    ctx.lineTo(Math.random()*canvas.width, Math.random()*canvas.height);
+    ctx.stroke();
+  }
+
+  ctx.font = "bold 22px Inter, Arial";
+  for (let i = 0; i < currentCaptcha.length; i++) {
+    ctx.fillStyle = `hsl(${Math.random()*360},70%,65%)`;
+    ctx.save();
+    const x = 14 + i * 24;
+    const y = 28 + (Math.random()*6 - 3);
+    ctx.translate(x, y);
+    ctx.rotate((Math.random() - 0.5) * 0.35);
+    ctx.fillText(currentCaptcha[i], 0, 0);
+    ctx.restore();
+  }
+}
+
+document.getElementById("refreshBtn").addEventListener("click", drawCaptcha);
+drawCaptcha();
+
+function showError(msg) {
+  errorMsg.textContent = msg;
+  errorMsg.style.display = "block";
+}
+
+form.addEventListener("submit", function(e) {
+  e.preventDefault();
+  errorMsg.style.display = "none";
+
+  const email = emailInput.value.trim().toLowerCase();
+  const pass = passwordInput.value;
+
+  if (email !== ALLOWED_EMAIL) {
+    showError("Access denied. Invalid username.");
+    return;
+  }
+  if (pass !== ALLOWED_PASSWORD) {
+    showError("Incorrect password. Access denied.");
+    return;
+  }
+  if (captchaInput.value.trim() !== currentCaptcha) {
+    showError("Incorrect CAPTCHA. Please try again.");
+    captchaInput.value = "";
+    drawCaptcha();
+    return;
+  }
+
+  // Success
+  localStorage.setItem("stl_meta_logged_in", "true");
+  if (document.getElementById("rememberMe").checked) {
+    localStorage.setItem("stl_saved_email", emailInput.value.trim());
+    localStorage.setItem("stl_saved_pass", pass);
+  } else {
+    localStorage.removeItem("stl_saved_email");
+    localStorage.removeItem("stl_saved_pass");
+  }
+
+  window.location.href = "dashboard.html";
+});
 </script>
 </body>
 </html>
