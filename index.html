@@ -234,7 +234,7 @@ if (localStorage.getItem("stl_saved_email") && localStorage.getItem("stl_saved_p
 }
 
 if (localStorage.getItem("stl_meta_logged_in") === "true") {
-  window.location.href = "dashboard.html";
+  window.location.href = "meta-dashboard.html";
 }
 
 document.getElementById("togglePwd").addEventListener("click", function() {
@@ -315,7 +315,7 @@ form.addEventListener("submit", function(e) {
     localStorage.removeItem("stl_saved_email");
     localStorage.removeItem("stl_saved_pass");
   }
-  window.location.href = "dashboard.html";
+  window.location.href = "meta-dashboard.html";
 });
 </script>
 </body>
