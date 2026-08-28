@@ -115,7 +115,7 @@ label { font-weight: 600; font-size: 14px; text-shadow: 1px 1px 2px rgba(0, 0, 0
       </div>
       
       <div style="margin-bottom: 15px;">
-        <label for="captchaInput" style="font-size: 13px; display: block; margin-bottom: 4px;">Enter CAPTCHA text:</label>
+        # <label for="captchaInput" style="font-size: 13px; display: block; margin-bottom: 4px;">Enter CAPTCHA text:</label>
         <input type="text" id="captchaInput" name="captchaInput" class="form-control form-control-sm d-inline-block" style="width: 180px; text-align: center;" required placeholder="Type text above">
       </div>
 
